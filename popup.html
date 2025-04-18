@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat Width Expander Settings</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 10px;
+        width: 220px;
+      }
+      input[type="number"] {
+        width: 100%;
+        padding: 5px;
+        margin-top: 5px;
+      }
+      button {
+        margin-top: 10px;
+        width: 100%;
+        padding: 5px;
+      }
+      .radio-group {
+        margin: 10px 0;
+      }
+      .radio-group label {
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Set Chat Width</h3>
+    <div class="radio-group">
+      <label>
+        <input type="radio" name="unit" value="px" checked> Pixels
+      </label>
+      <label>
+        <input type="radio" name="unit" value="%"> Percentage
+      </label>
+    </div>
+    <label for="widthInput">Width:</label>
+    <input type="number" id="widthInput" placeholder="e.g. 768" min="1" max="100">
+    <button id="saveBtn">Save</button>
+    <script src="popup.js"></script>
+  </body>
+</html>
