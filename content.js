@@ -2,12 +2,12 @@
  * @file content.js
  * @description This content script is responsible for reading the user-defined width from Chrome storage
  * and applying that width to the appropriate chat interface container on supported sites.
- * 
+ *
  * The script supports two vendor sites:
  *  - ChatGPT (chat.openai.com): It targets a container with a unique class "group/turn-messages"
  *  - Gemini (gemini.google.com): It now targets the container with the CSS class "conversation-container"
  *    rather than a generic <main> element.
- * 
+ *
  * @notes
  * - The DOM is observed for mutations in case the target container loads dynamically.
  * - In case the container is not immediately found, a warning is logged.
@@ -28,6 +28,8 @@ function applyChatWidth(width, unit) {
     vendor = "gemini";
   } else if (url.includes("grok.com")) {
     vendor = "grok";
+  } else if (url.includes("kapa.ai")) {
+    vendor = "kapa";
   } else {
     console.warn("Unsupported chat interface for width expander.");
     return;
@@ -69,6 +71,22 @@ function applyChatWidth(width, unit) {
       console.log(`Updated ${containers.length} Grok container(s) max-width to ${width}${unit}`);
     } else {
       console.log("No Grok containers found.");
+    }
+  } else if (vendor === "kapa") {
+    // For Kapa.ai, target the specific container in the page structure
+    const parentElement = document.querySelector("#__next > div > main > div > div > div > div");
+    if (!parentElement) {
+      console.warn(`Element with selector "${selector}" not found.`);
+      return;
+    }
+
+    const descendantElements = parentElement.querySelectorAll('*');
+
+    for (const el of descendantElements) {
+      const computedDisplay = window.getComputedStyle(el).display;
+      if (computedDisplay !== 'inline') {
+        el.style.maxWidth = width + unit;
+      }
     }
   }
 }
@@ -134,7 +152,7 @@ try {
         if (changes.chatWidth || changes.widthUnit) {
           const newWidth = changes.chatWidth ? changes.chatWidth.newValue : null;
           const newUnit = changes.widthUnit ? changes.widthUnit.newValue : null;
-          
+
           if (newWidth !== null && newUnit !== null) {
             applyChatWidth(newWidth, newUnit);
           }
