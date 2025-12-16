@@ -7,6 +7,7 @@ A Chrome extension that allows you to customize the width of chat interfaces for
 - ChatGPT (chatgpt.com)
 - Gemini (gemini.google.com)
 - Grok (grok.com)
+- Kapa.ai (chat.kapa.ai)
 
 ## Features
 

@@ -17,11 +17,11 @@
         "matches": [
           "*://chatgpt.com/*",
           "*://gemini.google.com/*",
-          "*://grok.com/*"
+          "*://grok.com/*",
+          "*://chat.kapa.ai/*"
         ],
         "js": ["content.js"],
         "run_at": "document_idle"
       }
     ]
   }
-  
